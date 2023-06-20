@@ -21,5 +21,5 @@ from users.views import Inscription, Connexion
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('inscription/', Inscription, name = "inscription"),
-    path('connexion/', Connexion, name = "connexion"),
+    path('', Connexion, name = "connexion"),
 ]

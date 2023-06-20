@@ -1,6 +1,13 @@
-{% extends "users/base.html" %}
+{% extends "users/base_users.html" %}
 {% block title %}Connexion{% endblock %}
+
 
 {% block content %}
 <h1>Hello Django</h1>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Connexion">
+</form>
 {% endblock %}
