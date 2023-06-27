@@ -20,7 +20,11 @@ def Connexion(request):
     if request.method == "POST":
         form = ConnexionForm(request.POST)
         if form.is_valid():
-            user = authenticate(email=form.cleaned_data["email"], password = form.cleaned_data["password"])
+            user = authenticate(
+                email=form.cleaned_data["email"], 
+                password = form.cleaned_data["password"],
+                )
+           
             if user is not None:
                 print("ok")
                 login(request, user)
