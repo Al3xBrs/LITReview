@@ -3,5 +3,13 @@
 
 
 {% block content %}
-<h1>Hello django</h1>
+<h1>Inscription</h1>
+<p>Veulliez rentrer les identifiants qui vous serviront de connexion.</p>
+<form action="" method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Valider">
+</form>
+
+
 {% endblock %}

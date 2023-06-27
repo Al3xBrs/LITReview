@@ -6,6 +6,7 @@
 <h1>Hello Django</h1>
 
 <form action="" method="post">
+    {{ message }}
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Connexion">
