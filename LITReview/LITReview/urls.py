@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 import articles.views
 from django.contrib.auth.views import LoginView,LogoutView, PasswordChangeDoneView, PasswordChangeView
+from users.views import signup_page
 
 
 urlpatterns = [
@@ -27,4 +28,5 @@ urlpatterns = [
     path('home/', articles.views.home, name="home"),
     path('change-password/', PasswordChangeView.as_view(template_name = 'users/change_password.html'), name="password_change"),
     path('password_change_done/', PasswordChangeDoneView.as_view(template_name = 'users/change_password_success.html'), name="password_change_done"),
+    path('signup/', signup_page, name='signup')
 ]
