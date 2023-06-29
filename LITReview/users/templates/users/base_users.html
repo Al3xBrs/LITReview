@@ -10,5 +10,10 @@
 <body>
     {% block content %}{% endblock %}
 </body>
+<footer>
+    {% if user.is_authenticated %}
+    <p>Vous êtes connecté en tant que {{ user.username }}. <a href="{% url 'logout' %}">Se déconnecter.</a></p>
+    {% endif %}
+</footer>
 
 </html>
