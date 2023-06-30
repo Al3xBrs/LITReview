@@ -1,0 +1,13 @@
+{% extends 'articles/base_articles.html' %}
+{% block title %}Ticket{% endblock title %}
+
+{% block content %}
+{{ ticket.headline }}
+{{ ticket.picture.url }}
+{{ ticket.body }}
+<p>{{ ticket.user.username }} - {{ ticket.time_created }}</p>
+<a href="{% url 'review_upload' %}">Publier une review.</a>
+{% for review in reviews %}
+{{review}}
+{% endfor %}
+{% endblock content %}

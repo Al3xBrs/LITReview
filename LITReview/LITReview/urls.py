@@ -31,7 +31,8 @@ urlpatterns = [
     path('change-password/', PasswordChangeView.as_view(template_name = 'users/change_password.html'), name="password_change"),
     path('password-change-done/', PasswordChangeDoneView.as_view(template_name = 'users/change_password_success.html'), name="password_change_done"),
     path('signup/', signup_page, name='signup'),
-    path("ticket/upload/", articles.views.ticket_upload, name="ticket_upload")
+    path("ticket/upload/", articles.views.ticket_upload, name="ticket_upload"),
+    path("review/upload/", articles.views.review_upload, name="review_upload"),
 ]
 
 if settings.DEBUG:
