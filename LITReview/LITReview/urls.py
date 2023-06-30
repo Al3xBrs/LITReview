@@ -19,6 +19,8 @@ from django.urls import path
 import articles.views
 from django.contrib.auth.views import LoginView,LogoutView, PasswordChangeDoneView, PasswordChangeView
 from users.views import signup_page
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -27,6 +29,11 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name="logout"),
     path('home/', articles.views.home, name="home"),
     path('change-password/', PasswordChangeView.as_view(template_name = 'users/change_password.html'), name="password_change"),
-    path('password_change_done/', PasswordChangeDoneView.as_view(template_name = 'users/change_password_success.html'), name="password_change_done"),
-    path('signup/', signup_page, name='signup')
+    path('password-change-done/', PasswordChangeDoneView.as_view(template_name = 'users/change_password_success.html'), name="password_change_done"),
+    path('signup/', signup_page, name='signup'),
+    path("ticket/upload/", articles.views.ticket_upload, name="ticket_upload")
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
