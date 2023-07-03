@@ -2,12 +2,14 @@
 {% block title %}Homepage{% endblock %}
 
 {% block content %}
-<h1>Tickets</h1>
+<h1>LITReview</h1>
 <p>Bonjour {{user.username}}, vous êtes connecté.</p>
+<a href="{% url 'ticket_upload' %}">Publier un ticket.</a>
+
 {% for ticket in tickets %}
 <img src="{{ ticket.picture.url }}">
-<a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }} - {{ ticket.id }}</a>
+<a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }}</a>
 <p>Publié par {{ ticket.user.username }}</p>
 {% endfor %}
-<a href="{% url 'ticket_upload' %}">Publier un ticket.</a>
+
 {% endblock %}

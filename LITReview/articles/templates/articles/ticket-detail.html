@@ -1,14 +1,16 @@
 {% extends 'articles/base_articles.html' %}
-{% block title %}Ticket{% endblock title %}
+{% block title %}Post de {{ ticket.user.username }}{% endblock title %}
 
 {% block content %}
-{{ ticket.headline }}
+<h1>{{ ticket.headline }}</h1>
 <img src="{{ ticket.picture.url }}" alt="{{ ticket.headline }}">
-{{ ticket.body }}
+<p>{{ ticket.body }}</p>
 <p>{{ ticket.user.username }} - {{ ticket.time_created }}</p>
-<a href="{% url 'review_upload' %}">Publier une review.</a>
+<a href="{% url 'review_upload' ticket.id %}">Publier une review.</a>
 {% for review in reviews %}
-{{review}}
+<h2>{{review.headline}}</h2>
+<p>{{ review.body }}</p>
+<p>Publié par {{ review.user.username }}</p>
 {% endfor %}
 {% if ticket.user == user %}
 <a href="{% url 'ticket_delete_view' ticket.id %}">Supprimer le post.</a>

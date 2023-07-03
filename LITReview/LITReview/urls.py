@@ -22,6 +22,7 @@ from users.views import signup_page
 from django.conf import settings
 from django.conf.urls.static import static
 
+#TODO : Checker pour diviser les urls par app ?
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,7 +33,7 @@ urlpatterns = [
     path('password-change-done/', PasswordChangeDoneView.as_view(template_name = 'users/change_password_success.html'), name="password_change_done"),
     path('signup/', signup_page, name='signup'),
     path("ticket/upload/", articles.views.ticket_upload, name="ticket_upload"),
-    path("review/upload/", articles.views.review_upload, name="review_upload"),
+    path("review/upload/<int:ticket_id>/", articles.views.review_upload, name="review_upload"),
     path("ticket/<int:ticket_id>/", articles.views.ticket_detail, name="ticket_detail"),
     path("ticket-delete/<int:ticket_id>/", articles.views.ticket_delete, name="ticket_delete"),
     path("ticket-delete-view/<int:ticket_id>/", articles.views.ticket_delete_view, name="ticket_delete_view"),

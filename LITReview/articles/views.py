@@ -21,7 +21,6 @@ def ticket_upload(request):
     
     return render(request, 'articles/ticket-upload.html', {"form":form})
 
-#TODO: Récupérer ID du ticket.
 @login_required
 def ticket_detail(request, ticket_id):
     ticket = models.Ticket.objects.get(id=ticket_id)
@@ -38,17 +37,16 @@ def ticket_delete_view(request, ticket_id):
     ticket = models.Ticket.objects.get(id=ticket_id)
     return render(request, "articles/ticket-delete.html", {"ticket":ticket})
 
-
 @login_required
-def review_upload(request):
+def review_upload(request, ticket_id):
     form = ReviewForm()
     if request.method == "POST":
-        form = ReviewForm(request.POST, request.FILES)
+        form = ReviewForm(request.POST)
         if form.is_valid():
             review = form.save(commit=False)
             review.user = request.user
-            
+            review.ticket = models.Ticket.objects.get(id=ticket_id)
             review.save()
-            return redirect('home')
+            return redirect(f'ticket_detail/{ticket_id}')
         
     return render(request, 'articles/review-upload.html', {"form":form})
