@@ -3,11 +3,14 @@
 
 {% block content %}
 {{ ticket.headline }}
-{{ ticket.picture.url }}
+<img src="{{ ticket.picture.url }}" alt="{{ ticket.headline }}">
 {{ ticket.body }}
 <p>{{ ticket.user.username }} - {{ ticket.time_created }}</p>
 <a href="{% url 'review_upload' %}">Publier une review.</a>
 {% for review in reviews %}
 {{review}}
 {% endfor %}
+{% if ticket.user == user %}
+<a href="{% url 'ticket_delete_view' ticket.id %}">Supprimer le post.</a>
+{% endif %}
 {% endblock content %}

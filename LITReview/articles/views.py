@@ -21,9 +21,23 @@ def ticket_upload(request):
     
     return render(request, 'articles/ticket-upload.html', {"form":form})
 
+#TODO: Récupérer ID du ticket.
 @login_required
-def ticket_detail(request):
-    pass
+def ticket_detail(request, ticket_id):
+    ticket = models.Ticket.objects.get(id=ticket_id)
+    return render(request, 'articles/ticket-detail.html', {"ticket":ticket})
+
+@login_required
+def ticket_delete(request, ticket_id):
+    ticket = models.Ticket.objects.get(id=ticket_id)
+    ticket.delete()
+    return redirect("home")
+
+@login_required
+def ticket_delete_view(request, ticket_id):
+    ticket = models.Ticket.objects.get(id=ticket_id)
+    return render(request, "articles/ticket-delete.html", {"ticket":ticket})
+
 
 @login_required
 def review_upload(request):

@@ -6,9 +6,8 @@
 <p>Bonjour {{user.username}}, vous êtes connecté.</p>
 {% for ticket in tickets %}
 <img src="{{ ticket.picture.url }}">
-<p>{{ ticket.headline }}</p>
+<a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }} - {{ ticket.id }}</a>
 <p>Publié par {{ ticket.user.username }}</p>
-
 {% endfor %}
 <a href="{% url 'ticket_upload' %}">Publier un ticket.</a>
 {% endblock %}

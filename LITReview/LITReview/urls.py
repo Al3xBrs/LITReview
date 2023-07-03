@@ -33,6 +33,9 @@ urlpatterns = [
     path('signup/', signup_page, name='signup'),
     path("ticket/upload/", articles.views.ticket_upload, name="ticket_upload"),
     path("review/upload/", articles.views.review_upload, name="review_upload"),
+    path("ticket/<int:ticket_id>/", articles.views.ticket_detail, name="ticket_detail"),
+    path("ticket-delete/<int:ticket_id>/", articles.views.ticket_delete, name="ticket_delete"),
+    path("ticket-delete-view/<int:ticket_id>/", articles.views.ticket_delete_view, name="ticket_delete_view"),
 ]
 
 if settings.DEBUG:

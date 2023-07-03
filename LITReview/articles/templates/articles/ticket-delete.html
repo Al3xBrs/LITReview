@@ -1,0 +1,8 @@
+{% extends 'articles/base_articles.html' %}
+
+{% block title %}Suppression{% endblock title %}
+{% block content %}
+<h2>Supprimer le post ?</h2>
+<a href="{% url 'ticket_delete' ticket.id %}">Oui</a>
+<a href="{% url 'ticket_detail' ticket.id %}">Non</a>
+{% endblock content %}
