@@ -5,7 +5,7 @@ from articles import models
 
 @login_required
 def home(request):
-    tickets = models.Ticket.objects.all()
+    tickets = models.Ticket.objects.all().order_by("-time_created")
     return render(request, 'articles/home.html', {"tickets": tickets})
 
 @login_required
@@ -23,8 +23,9 @@ def ticket_upload(request):
 
 @login_required
 def ticket_detail(request, ticket_id):
+    reviews = models.Review.objects.filter(ticket=ticket_id).order_by('-time_created')
     ticket = models.Ticket.objects.get(id=ticket_id)
-    return render(request, 'articles/ticket-detail.html', {"ticket":ticket})
+    return render(request, 'articles/ticket-detail.html', {"ticket":ticket, "reviews":reviews})
 
 @login_required
 def ticket_delete(request, ticket_id):
@@ -47,6 +48,6 @@ def review_upload(request, ticket_id):
             review.user = request.user
             review.ticket = models.Ticket.objects.get(id=ticket_id)
             review.save()
-            return redirect(f'ticket_detail/{ticket_id}')
+            return redirect('ticket_detail',ticket_id)
         
     return render(request, 'articles/review-upload.html', {"form":form})

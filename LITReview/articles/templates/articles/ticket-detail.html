@@ -8,9 +8,10 @@
 <p>{{ ticket.user.username }} - {{ ticket.time_created }}</p>
 <a href="{% url 'review_upload' ticket.id %}">Publier une review.</a>
 {% for review in reviews %}
+<h1>{{ review.rating }}</h1>
 <h2>{{review.headline}}</h2>
 <p>{{ review.body }}</p>
-<p>Publié par {{ review.user.username }}</p>
+<p>Publié par {{ review.user.username }} le {{ review.time_created }}</p>
 {% endfor %}
 {% if ticket.user == user %}
 <a href="{% url 'ticket_delete_view' ticket.id %}">Supprimer le post.</a>
