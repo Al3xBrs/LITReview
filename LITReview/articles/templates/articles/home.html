@@ -9,7 +9,7 @@
 {% for ticket in tickets %}
 <img src="{{ ticket.picture.url }}">
 <a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }}</a>
-<p>Publié par {{ ticket.user.username }} le {{ ticket.time_created }}</p>
+<p>Publié par <a href="{% url 'profil_page' ticket.user.id %}">{{ ticket.user.username }}</a> le {{ ticket.time_created }}</p>
 {% endfor %}
 
 {% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'users/base_users.html' %}
+{% block title %}Profil{% endblock title %}
+
+{% block content %}
+<h1>Profil de {{ user.username }}</h1>
+<h2>Tickets postés</h2>
+{% for ticket in tickets %}
+<h2>{{ ticket.headline }}</h2>
+<p>{{ ticket.body }}</p>
+<p>le {{ ticket.time_created }}</p>
+{% endfor %}
+<h2>Reviews postées</h2>
+{% for review in reviews  %}
+<h2>Note :{{ review.rating }}</h2>
+<h3>{{ review.headline }}</h3>
+<p>{{ review.body }}</p>
+<p>le {{ review.time_created }}</p>
+{% endfor %}
+
+{% endblock content %}

@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 import articles.views
 from django.contrib.auth.views import LoginView,LogoutView, PasswordChangeDoneView, PasswordChangeView
-from users.views import signup_page
+from users.views import signup_page, profil_page
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -37,6 +37,7 @@ urlpatterns = [
     path("ticket/<int:ticket_id>/", articles.views.ticket_detail, name="ticket_detail"),
     path("ticket-delete/<int:ticket_id>/", articles.views.ticket_delete, name="ticket_delete"),
     path("ticket-delete-view/<int:ticket_id>/", articles.views.ticket_delete_view, name="ticket_delete_view"),
+    path("profil/<int:user_id>/", profil_page, name="profil_page"),
 ]
 
 if settings.DEBUG:
