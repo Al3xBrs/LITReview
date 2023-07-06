@@ -22,7 +22,7 @@ from users.views import signup_page, profil_page
 from django.conf import settings
 from django.conf.urls.static import static
 
-#TODO : Checker pour diviser les urls par app ?
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),

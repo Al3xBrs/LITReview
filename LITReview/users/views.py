@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 def signup_page(request):
     form = users.forms.SignupForm()
     if request.method == 'POST':
-        form = users.forms.SignupForm(request.POST)
+        form = users.forms.SignupForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             login(request, user)
