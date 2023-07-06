@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 import articles.views
 from django.contrib.auth.views import LoginView,LogoutView, PasswordChangeDoneView, PasswordChangeView
-from users.views import signup_page, profil_page
+from users.views import signup_page, profil_page, follow_user, unfollow_user
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -38,6 +38,8 @@ urlpatterns = [
     path("ticket-delete/<int:ticket_id>/", articles.views.ticket_delete, name="ticket_delete"),
     path("ticket-delete-view/<int:ticket_id>/", articles.views.ticket_delete_view, name="ticket_delete_view"),
     path("profil/<int:user_id>/", profil_page, name="profil_page"),
+    path('user/follow/<int:user_id>/', follow_user, name='follow_user'),
+    path('user/unfollow/<int:user_id>/', unfollow_user, name='unfollow_user'),
 ]
 
 if settings.DEBUG:

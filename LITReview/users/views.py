@@ -1,14 +1,15 @@
-import users
+
+from users import forms, models
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.conf import settings
-import articles
+from articles import models as art_mod
 from django.contrib.auth.decorators import login_required
 
 def signup_page(request):
-    form = users.forms.SignupForm()
+    form = forms.SignupForm()
     if request.method == 'POST':
-        form = users.forms.SignupForm(request.POST, request.FILES)
+        form = forms.SignupForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             login(request, user)
@@ -18,10 +19,24 @@ def signup_page(request):
 
 @login_required
 def profil_page(request, user_id):
-    user = users.models.User.objects.get(id=user_id)
-    tickets = articles.models.Ticket.objects.filter(user = user).order_by("-time_created")
-    reviews = articles.models.Review.objects.filter(user = user).order_by("-time_created")
-    return render(request, "users/profil_user.html", {"user":user, "tickets":tickets, "reviews":reviews})
+    user_check = models.User.objects.get(id=user_id)
+    tickets = art_mod.Ticket.objects.filter(user = user_check).order_by("-time_created")
+    reviews = art_mod.Review.objects.filter(user = user_check).order_by("-time_created")
+    return render(request, "users/profil_user.html", {"user_check":user_check, "tickets":tickets, "reviews":reviews})
+
+@login_required
+def follow_user(request, user_id):
+    user_check = models.User.objects.get(id=user_id)
+    user = models.User.objects.get(id=request.user.id)
+    user.followers.add(user_check)
+    return redirect("profil_page", user_id)
+
+@login_required
+def unfollow_user(request, user_id):
+    user_check = models.User.objects.get(id=user_id)
+    user = models.User.objects.get(id=request.user.id)
+    user.followers.remove(user_check)
+    return redirect("profil_page", user_id)
 
 
 

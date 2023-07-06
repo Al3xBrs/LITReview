@@ -8,6 +8,14 @@
 </head>
 
 <body>
+    {% if user.is_authenticated %}
+    <section>
+        <nav>
+            <a href="{% url 'home' %}">Accueil</a>
+            <a href="{% url 'profil_page' user.id %}">Mon profil</a>
+        </nav>
+    </section>
+    {% endif %}
     {% block content %}{% endblock %}
 </body>
 

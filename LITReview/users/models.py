@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+
 class User(AbstractUser):
     """ """
 
@@ -9,6 +10,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ["username","password"]
     USERNAME_FIELD = "email"
     profile_picture = models.ImageField(verbose_name="Image de profil")
+    followers = models.ManyToManyField('self', blank=True)
 
 
 

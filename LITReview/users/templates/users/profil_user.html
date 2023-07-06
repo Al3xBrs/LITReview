@@ -2,7 +2,20 @@
 {% block title %}Profil{% endblock title %}
 
 {% block content %}
-<h1>Profil de {{ user.username }}</h1>
+<h1>Profil de {{ user_check.username }}</h1>
+{% if user_check != request.user %}
+    {% if user_check in request.user.followers.all %}
+        <form method="post" action="{% url 'unfollow_user' user_id=user_check.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Ne plus suivre</button>
+        </form>
+    {% else %}
+        <form method="post" action="{% url 'follow_user' user_id=user_check.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Suivre</button>
+        </form>
+    {% endif %}
+{% endif %}
 <h2>Tickets postés</h2>
 {% for ticket in tickets %}
 <h2>{{ ticket.headline }}</h2>
