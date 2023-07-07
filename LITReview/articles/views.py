@@ -40,6 +40,7 @@ def ticket_delete_view(request, ticket_id):
 
 @login_required
 def review_upload(request, ticket_id):
+    ticket = models.Ticket.objects.get(id=ticket_id)
     form = ReviewForm()
     if request.method == "POST":
         form = ReviewForm(request.POST)
@@ -50,4 +51,4 @@ def review_upload(request, ticket_id):
             review.save()
             return redirect('ticket_detail',ticket_id)
         
-    return render(request, 'articles/review-upload.html', {"form":form})
+    return render(request, 'articles/review-upload.html', {"form":form, "ticket":ticket})

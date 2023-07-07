@@ -1,11 +1,11 @@
-{% extends "users/base_users.html" %}
+{% extends "articles/base.html" %}
 {% block title %}Inscription{% endblock %}
 
 
 {% block content %}
 <h1>Inscription</h1>
 <p>Veulliez rentrer les identifiants qui vous serviront de connexion.</p>
-<form action="" method="post" novalidate>
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="S'inscrire">

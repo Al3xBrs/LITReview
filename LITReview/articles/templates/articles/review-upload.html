@@ -1,10 +1,27 @@
-{% extends 'articles/base_articles.html' %}
+{% extends 'articles/base.html' %}
 {% block title %}Review{% endblock title %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-    {{ form.as_p }}
+<h2>Publier une review sur "{{ ticket.headline }}"</h2>
+<p>Noter le livre ou l'article et dites ce que vous en avez pensé.</p>
+<br>
+<img src="{{ ticket.picture.url }}" alt="Image">
+
+<form method="post">
     {% csrf_token %}
+    <br><br>
+    <label for="exampleFormControlInput1" class="form-label">Note</label>
+    <br>
+    {{form.rating}}
+    <br><br>
+    <label for="exampleFormControlInput1" class="form-label">Titre</label>
+    <br>
+    {{ form.headline }}
+    <br><br>
+    <label for="exampleFormControlInput1" class="form-label">Commentaire</label>
+    <br>
+    {{ form.body }}
+    <br><br>
     <input type="submit" value="Publier">
 </form>
 {% endblock content %}

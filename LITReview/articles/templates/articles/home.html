@@ -1,15 +1,15 @@
-{% extends 'articles/base_articles.html' %}
+{% extends 'articles/base.html' %}
 {% block title %}Homepage{% endblock %}
 
 {% block content %}
-<h1>LITReview</h1>
-<p>Bonjour {{user.username}}, vous êtes connecté.</p>
-<a href="{% url 'ticket_upload' %}">Publier un ticket.</a>
-
 {% for ticket in tickets %}
-<img src="{{ ticket.picture.url }}">
+<br>
 <a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }}</a>
+<br>
 <p>Publié par <a href="{% url 'profil_page' ticket.user.id %}">{{ ticket.user.username }}</a> le {{ ticket.time_created }}</p>
+<br>
+<img src="{{ ticket.picture.url }}">
+<hr>
 {% endfor %}
 
 {% endblock %}

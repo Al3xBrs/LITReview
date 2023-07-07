@@ -1,11 +1,22 @@
-{% extends 'articles/base_articles.html' %}
+{% extends 'articles/base.html' %}
 {% block Title %}Ticket{% endblock Title %}
 
 {% block content %}
 <h2>Publier un ticket</h2>
+<p>Demandez une critique sur un livre ou un article que vous avez vu.</p>
+<br>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+    <label for="exampleFormControlInput1" class="form-label">Titre</label>
+    <br>
+    {{ form.headline }}
+    <br><br>
+    <label for="exampleFormControlInput1" class="form-label">Commentaire</label>
+    <br>
+    {{ form.body }}
+    <br><br><br>
+    {{ form.picture }}
+    <br><br><br>
     <input type="submit" value="Publier">
 </form>
 {% endblock content %}
