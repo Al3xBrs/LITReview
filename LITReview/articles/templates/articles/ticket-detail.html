@@ -6,14 +6,17 @@
 <img src="{{ ticket.picture.url }}" alt="{{ ticket.headline }}">
 <p>{{ ticket.body }}</p>
 <p><a href="{% url 'profil_page' user.id %}"></a>{{ ticket.user.username }} - {{ ticket.time_created }}</p>
+{% if ticket.user == user %}
+<a href="{% url 'ticket_delete_view' ticket.id %}">Supprimer le post.</a>
+{% endif %}
+{% if reviews.count < 1 %}
 <a href="{% url 'review_upload' ticket.id %}">Publier une review.</a>
+{% endif %}
 {% for review in reviews %}
 <h1>{{ review.rating }}</h1>
 <h2>{{review.headline}}</h2>
 <p>{{ review.body }}</p>
-<p>Publié par {{ review.user.username }} le {{ review.time_created }}</p>
+<p>Publié par <a href="{% url 'profil_page' review.user.id %}">{{ review.user.username }}</a> le {{ review.time_created }}</p>
 {% endfor %}
-{% if ticket.user == user %}
-<a href="{% url 'ticket_delete_view' ticket.id %}">Supprimer le post.</a>
-{% endif %}
+
 {% endblock content %}

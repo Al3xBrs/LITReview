@@ -40,6 +40,7 @@ urlpatterns = [
     path("profil/<int:user_id>/", profil_page, name="profil_page"),
     path('user/follow/<int:user_id>/', follow_user, name='follow_user'),
     path('user/unfollow/<int:user_id>/', unfollow_user, name='unfollow_user'),
+    path("followed/", articles.views.followed, name="followed")
 ]
 
 if settings.DEBUG:

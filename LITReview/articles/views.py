@@ -6,7 +6,13 @@ from articles import models
 @login_required
 def home(request):
     tickets = models.Ticket.objects.all().order_by("-time_created")
-    return render(request, 'articles/home.html', {"tickets": tickets})
+    reviews = models.Review.objects.all()
+    return render(request, 'articles/home.html', {"tickets": tickets, "reviews":reviews})
+
+#TODO: Vue file d'abonnement
+@login_required
+def followed(request):
+    pass
 
 @login_required
 def ticket_upload(request):
