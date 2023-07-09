@@ -35,8 +35,7 @@ urlpatterns = [
     path('password-change-done/', PasswordChangeDoneView.as_view(template_name = 'users/change_password_success.html'), name="password_change_done"),
 
     path("review/upload/<int:ticket_id>/", articles.views.review_upload, name="review_upload"),
-    #TODO:ICI
-    path("review/upload/", articles.views.review_upload(ticket_id=None), name="review_up"),
+    path("review/upload/", articles.views.review_up, name="review_up"),
 
     path("ticket/upload/", articles.views.ticket_upload, name="ticket_upload"),
     path("ticket/<int:ticket_id>/", articles.views.ticket_detail, name="ticket_detail"),

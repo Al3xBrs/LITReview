@@ -2,13 +2,14 @@
 {% block title %}Review{% endblock title %}
 
 {% block content %}
-<h2>Publier une review sur "{{ ticket.headline }}"</h2>
+<h2>Publier une review.{{ ticket.headline }}</h2>
 <p>Noter le livre ou l'article et dites ce que vous en avez pensé.</p>
 <br>
 <img src="{{ ticket.picture.url }}" alt="Image">
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    {{ form.picture }}
     <br><br>
     <label for="exampleFormControlInput1" class="form-label">Note</label>
     <br>

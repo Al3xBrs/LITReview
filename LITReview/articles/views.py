@@ -58,3 +58,16 @@ def review_upload(request, ticket_id):
             return redirect('ticket_detail',ticket_id)
         
     return render(request, 'articles/review-upload.html', {"form":form, "ticket":ticket})
+
+@login_required
+def review_up(request):
+    form = ReviewForm()
+    if request.method == "POST":
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.save()
+            return redirect('home')
+        
+    return render(request, 'articles/review-upload.html', {"form":form})

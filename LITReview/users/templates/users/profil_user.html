@@ -3,6 +3,11 @@
 
 {% block content %}
 <h1>Profil de {{ user_check.username }}</h1>
+{% if user_check == request.user %}
+<a href="{% url 'password_change' %}">Changer de mot de passe</a>
+{% endif %}
+<br><br><br>
+
 {% if user_check != request.user %}
     {% if user_check in request.user.followers.all %}
         <form method="post" action="{% url 'unfollow_user' user_id=user_check.id %}">
@@ -16,18 +21,29 @@
         </form>
     {% endif %}
 {% endif %}
-<h2>Tickets postés</h2>
+<br><br>
+<h1>Tickets postés</h1>
+<br>
 {% for ticket in tickets %}
-<h2>{{ ticket.headline }}</h2>
+<h2><a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }}</a></h2>
 <p>{{ ticket.body }}</p>
 <p>le {{ ticket.time_created }}</p>
+<br><br>
 {% endfor %}
-<h2>Reviews postées</h2>
+<h1>Reviews postées</h1>
+<br>
 {% for review in reviews  %}
+{% if review.ticket != null %}
+<h2>Note :{{ review.rating }} sur <a href="{% url 'ticket_detail' review.ticket.id %}">{{ review.ticket.headline }}</a></h2>
+{% else %}
 <h2>Note :{{ review.rating }}</h2>
+{% if review.ticket == null  %}
+<img src="{{ review.picture.url }}" alt="Image">
+{% endif %}
+{% endif %}
 <h3>{{ review.headline }}</h3>
 <p>{{ review.body }}</p>
 <p>le {{ review.time_created }}</p>
+<br><br>
 {% endfor %}
-
 {% endblock content %}

@@ -21,12 +21,13 @@ class Review(models.Model):
         ("4",4),
         ("5",5),
     ]
-    ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE, blank=True)
+    ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE, blank=True, null=True)
     rating = models.CharField(max_length=1, choices=rate)
     headline = models.CharField(max_length=128)
     body = models.CharField(max_length=8192, blank=True)
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    picture = models.ImageField(verbose_name="Image", blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
 
