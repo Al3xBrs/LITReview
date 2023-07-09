@@ -10,9 +10,9 @@ def home(request):
     return render(request, 'articles/home.html', {"tickets": tickets, "reviews":reviews})
 
 #TODO: Vue file d'abonnement
-@login_required
-def followed(request):
-    pass
+# @login_required
+# def followed(request):
+#     pass
 
 @login_required
 def ticket_upload(request):

@@ -21,7 +21,7 @@ class Review(models.Model):
         ("4",4),
         ("5",5),
     ]
-    ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
+    ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE, blank=True)
     rating = models.CharField(max_length=1, choices=rate)
     headline = models.CharField(max_length=128)
     body = models.CharField(max_length=8192, blank=True)
