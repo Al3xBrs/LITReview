@@ -27,7 +27,7 @@ def profil_page(request, user_id):
 @login_required
 def follow_user(request, user_id):
     user_check = models.User.objects.get(id=user_id)
-    user = models.User.objects.get(id=request.user.id)
+    user = request.user
     user.followers.add(user_check)
     return redirect("profil_page", user_id)
 

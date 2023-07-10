@@ -24,19 +24,32 @@
 {% endif %}
 <br><br>
 <hr>
-<h1>Tickets postés</h1>
-<h3>({{ tickets.count }})</h3>
+<div class="article-metadata">
+    <h1>Tickets postés</h1>
+    <small class="text-muted">{{ tickets.count }} ticket(s)</small>
+</div>
+
 <br>
 {% for ticket in tickets %}
-<h2><a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }}</a></h2>
+<article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <small class="text-muted">{{ ticket.time_created }}</small>
+      </div>
+      <h2><a class="article-title" href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }}</a></h2>
+      <p class="article-content">{{ ticket.body }}</p>
+    </div>
+  </article>
+{% comment %} <h2><a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }}</a></h2>
 <p>{{ ticket.body }}</p>
 <p>le {{ ticket.time_created }}</p>
 <HR ALIGN=RIGHT WIDTH="40%">
-<br><br>
+<br><br> {% endcomment %}
 {% endfor %}
 <hr>
+<br><br>
 <h1>Reviews postées</h1>
-<h3>({{ reviews.count }})</h3>
+<small class="text-muted">{{ reviews.count }} review(s).</small>
 <br>
 {% for review in reviews  %}
 {% if review.ticket != null %}

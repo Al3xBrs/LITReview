@@ -2,8 +2,28 @@
 {% block title %}Mes abonnements{% endblock title %}
 
 {% block content %}
-{% for ticket,review in tickets,reviews %}
-<h2>{{ ticket.headline }}</h2>
-<h2>{{ review.headline }}</h2>
+
+{% for ticket in tickets %}
+{% for review in reviews %}
+
+{% if ticket.user in followed.all  %}
+{% if review.user in followed.all %}
+
+<br>
+<h2><a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }}</a></h2>
+
+{% if review.ticket == ticket %}
+<p>Review déjà publiée par {{ review.user.username }}!</p>
+{% endif %}
 {% endfor %}
+
+<br>
+<p>Publié par <a href="{% url 'profil_page' ticket.user.id %}">{{ ticket.user.username }}</a> le {{ ticket.time_created }}</p>
+<br>
+<img src="{{ ticket.picture.url }}">
+<hr>
+{% endif %}
+{% endif %}
+{% endfor %}
+
 {% endblock content %}
