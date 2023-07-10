@@ -2,6 +2,7 @@
 {% block title %}Profil{% endblock title %}
 
 {% block content %}
+<img src="{{ user_check.profile_picture.url }}" alt="Image de profil">
 <h1>Profil de {{ user_check.username }}</h1>
 {% if user_check == request.user %}
 <a href="{% url 'password_change' %}">Changer de mot de passe</a>
@@ -22,28 +23,34 @@
     {% endif %}
 {% endif %}
 <br><br>
+<hr>
 <h1>Tickets postés</h1>
+<h3>({{ tickets.count }})</h3>
 <br>
 {% for ticket in tickets %}
 <h2><a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }}</a></h2>
 <p>{{ ticket.body }}</p>
 <p>le {{ ticket.time_created }}</p>
+<HR ALIGN=RIGHT WIDTH="40%">
 <br><br>
 {% endfor %}
+<hr>
 <h1>Reviews postées</h1>
+<h3>({{ reviews.count }})</h3>
 <br>
 {% for review in reviews  %}
 {% if review.ticket != null %}
 <h2>Note :{{ review.rating }} sur <a href="{% url 'ticket_detail' review.ticket.id %}">{{ review.ticket.headline }}</a></h2>
 {% else %}
 <h2>Note :{{ review.rating }}</h2>
-{% if review.ticket == null  %}
+{% if review.picture.url is not null  %}
 <img src="{{ review.picture.url }}" alt="Image">
 {% endif %}
 {% endif %}
 <h3>{{ review.headline }}</h3>
 <p>{{ review.body }}</p>
 <p>le {{ review.time_created }}</p>
+<HR ALIGN=RIGHT WIDTH="40%">
 <br><br>
 {% endfor %}
 {% endblock content %}

@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
-from django import forms
+from django_resized import ResizedImageField
 
 
 class Ticket(models.Model):
@@ -10,7 +10,7 @@ class Ticket(models.Model):
     headline = models.CharField(max_length=120, verbose_name="Titre")
     body = models.CharField(max_length=1000, blank=True, verbose_name="Commentaire")
     upvote = models.PositiveIntegerField(blank=True, null=True)
-    picture = models.ImageField(verbose_name="Image de l'article", blank=True)
+    picture = ResizedImageField(size=[500,300],verbose_name="Image de l'article", blank=True)
 
 class Review(models.Model):
     rate = [
@@ -27,7 +27,7 @@ class Review(models.Model):
     body = models.CharField(max_length=8192, blank=True)
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    picture = models.ImageField(verbose_name="Image", blank=True)
+    picture = ResizedImageField(size=[500,300],verbose_name="Image", blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
 
