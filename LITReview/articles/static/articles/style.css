@@ -12,5 +12,11 @@
 }
 
 .main {
-    background-color: rgb(220, 216, 216);
+    background-color: rgb(249, 247, 247);
+}
+
+.post_content_type {
+    position: relative;
+    padding-left: 25px;
+    padding-top: 25px;
 }

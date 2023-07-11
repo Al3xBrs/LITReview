@@ -8,11 +8,14 @@ from django.db.models import CharField, Value
 
 @login_required
 def home(request):
-    tickets = models.Ticket.objects.all().order_by("-time_created")
+    tickets = models.Ticket.objects.all()
+    tickets = tickets.annotate(content_type=Value("ticket", CharField()))
     reviews = models.Review.objects.all()
-    return render(
-        request, "articles/home.html", {"tickets": tickets, "reviews": reviews}
+    reviews = reviews.annotate(content_type=Value("review", CharField()))
+    posts = sorted(
+        chain(tickets, reviews), key=lambda post: post.time_created, reverse=True
     )
+    return render(request, "articles/home.html", {"posts": posts})
 
 
 # TODO: Vue file d'abonnement
@@ -20,11 +23,13 @@ def home(request):
 def followed(request):
     user = request.user
     followed = user.followers
-    reviews = models.Review.objects.all().order_by("-time_created")
+    reviews = models.Review.objects.all()
     reviews = reviews.annotate(content_type=Value("review", CharField()))
-    tickets = models.Ticket.objects.all().order_by("-time_created")
+    tickets = models.Ticket.objects.all()
     tickets = tickets.annotate(content_type=Value("ticket", CharField()))
-    posts = sorted(chain(reviews, tickets), key=lambda post: post.time_created)
+    posts = sorted(
+        chain(reviews, tickets), key=lambda post: post.time_created, reverse=True
+    )
     return render(
         request,
         "articles/followed.html",

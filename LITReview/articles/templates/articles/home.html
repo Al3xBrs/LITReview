@@ -2,20 +2,40 @@
 {% block title %}Homepage{% endblock %}
 
 {% block content %}
-    {% for ticket in tickets %}
+    {% for post in posts %}
         <div class="card" style="width: 35rem;">
-            <img class="card-img-top" src="{{ ticket.picture.url }}" alt="Image">
-            <div class="card-body">
-            <h5 class="card-title">{{ ticket.headline }}</h5>
-            <small class="text-muted">Posté par <a href="{% url 'profil_page' ticket.user.id %}">{{ ticket.user.username }}</a></small>
-            <br><br>
-            <p class="card-text">{{ ticket.body }}</p>
-            <br>
+            <div class="post_head">
+                <div class="post_content_type">
+                    {% if post.content_type == "ticket" %}
+                    <h5 class="card-title">Ticket</h5>
+                    {% else %}
+                    <h5 class="card-title">Review</h5>
+                    {% endif %}
+                    <small class="text-muted">Le {{ post.time_created }} par <a href="{% url 'profil_page' post.user.id %}">{{ post.user.username }}</a></small>
+                    <br><br>
+                </div>
+            </div>
 
-            {% if ticket.review_posted %}
-            <a href="{% url 'ticket_detail' ticket.id %}" class="btn btn-primary">Voir la review</a>
-            {% else %}
-            <a href="{% url 'ticket_detail' ticket.id %}" class="btn btn-primary">Publier une review</a>
+                {% if post.picture.url != None %}
+                <img class="card-img-top" src="{{ post.picture.url }}" alt="Image">
+                {% endif %}
+
+            <div class="card-body">
+            <h5 class="card-title">{{ post.headline }}</h5>
+            {% if post.content_type == "review" %}
+            <h5 class="card-title">Note : {{ post.rating }}</h5>
+            {% endif %}
+            <br><br>
+            <p class="card-text">{{ post.body }}</p>
+            <br>
+            {% if post.content_type != "review" %}
+                {% if post.review_posted %}
+                    <a href="{% url 'ticket_detail' post.id %}" class="btn btn-primary">Voir la review</a>
+                    <small class="text-muted">de <a href="{% url 'profil_page' post.user.id %}">{{ post.user.username }}</a></small>
+                {% endif %}
+                {% if post.review_posted is False %}
+                <a href="{% url 'review_upload' post.id %}" class="btn btn-primary">Publier une review</a>
+                {% endif %}
             {% endif %}
             </div>
         </div>
