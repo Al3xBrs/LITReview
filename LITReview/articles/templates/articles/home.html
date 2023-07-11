@@ -2,19 +2,24 @@
 {% block title %}Homepage{% endblock %}
 
 {% block content %}
-{% for ticket in tickets %}
-<br>
-<h2><a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }}</a></h2>
-{% for review in reviews %}
-{% if review.ticket == ticket %}
-<p>Review déjà publiée par {{ review.user.username }}!</p>
-{% endif %}
-{% endfor %}
-<br>
-<p>Publié par <a href="{% url 'profil_page' ticket.user.id %}">{{ ticket.user.username }}</a> le {{ ticket.time_created }}</p>
-<br>
-<img src="{{ ticket.picture.url }}">
-<hr>
-{% endfor %}
+    {% for ticket in tickets %}
+        <div class="card" style="width: 35rem;">
+            <img class="card-img-top" src="{{ ticket.picture.url }}" alt="Image">
+            <div class="card-body">
+            <h5 class="card-title">{{ ticket.headline }}</h5>
+            <small class="text-muted">Posté par <a href="{% url 'profil_page' ticket.user.id %}">{{ ticket.user.username }}</a></small>
+            <br><br>
+            <p class="card-text">{{ ticket.body }}</p>
+            <br>
+
+            {% if ticket.review_posted %}
+            <a href="{% url 'ticket_detail' ticket.id %}" class="btn btn-primary">Voir la review</a>
+            {% else %}
+            <a href="{% url 'ticket_detail' ticket.id %}" class="btn btn-primary">Publier une review</a>
+            {% endif %}
+            </div>
+        </div>
+        <br><br><br>
+    {% endfor %}
 
 {% endblock %}

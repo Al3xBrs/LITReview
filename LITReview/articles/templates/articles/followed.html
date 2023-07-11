@@ -2,28 +2,41 @@
 {% block title %}Mes abonnements{% endblock title %}
 
 {% block content %}
+    {% for post in posts %}
+        {% if post.content_type == "ticket" and post.user in followed.all%}
+            <div class="card" style="width: 35rem;">
+                <img class="card-img-top" src="{{ post.picture.url }}" alt="Image">
+                <div class="card-body">
+                <h5 class="card-title">{{ post.headline }}</h5>
+                <small class="text-muted">Posté par <a href="{% url 'profil_page' post.user.id %}">{{ post.user.username }}</a></small>
+                <br><br>
+                <p class="card-text">{{ post.body }}</p>
+                <br>
+                {% if post.review.ticket == post %}
+                <a href="{% url 'ticket_detail' post.id %}" class="btn btn-primary">Voir la review</a>
+                {% endif %}
+                {% if post.review.count < 1 %}
+                <a href="{% url 'ticket_detail' post.id %}" class="btn btn-primary">Publier une review</a>
+                {% endif %}
+                </div>
+            </div>
+            <br><br><br>
+        {% elif post.content_type == "review" and post.ticket == None and post.user in followed.all%}
+            <div class="card" style="width: 35rem;">
+                <img class="card-img-top" src="{{ post.picture.url }}" alt="Image">
+                <div class="card-body">
+                <h5 class="card-title">Note :{{ post.rating }}</h5>
+                <h5 class="card-title">{{ post.headline }}</h5>
+                <small class="text-muted">Posté par <a href="{% url 'profil_page' post.user.id %}">{{ post.user.username }}</a></small>
+                <br><br>
+                <p class="card-text">{{ post.body }}</p>
+                <br>
+                </div>
+            </div>
+            <br><br><br>
+        {% endif %}
 
-{% for ticket in tickets %}
-{% for review in reviews %}
+    {% endfor %}
 
-{% if ticket.user in followed.all  %}
-{% if review.user in followed.all %}
-
-<br>
-<h2><a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.headline }}</a></h2>
-
-{% if review.ticket == ticket %}
-<p>Review déjà publiée par {{ review.user.username }}!</p>
-{% endif %}
-{% endfor %}
-
-<br>
-<p>Publié par <a href="{% url 'profil_page' ticket.user.id %}">{{ ticket.user.username }}</a> le {{ ticket.time_created }}</p>
-<br>
-<img src="{{ ticket.picture.url }}">
-<hr>
-{% endif %}
-{% endif %}
-{% endfor %}
 
 {% endblock content %}
