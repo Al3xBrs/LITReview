@@ -23,7 +23,15 @@
 
             <div class="card-body">
             <h5 class="card-title">{{ post.headline }}</h5>
-            {% if post.content_type == "review" %}
+            <br>
+            {% if post.content_type == "review" and post.ticket != None %}
+            <img class="card-img-top" src="{{ post.ticket.picture.url }}" alt="Image">
+            <br><br>
+            <h5 class="card-title">Note : {{ post.rating }}</h5>
+            <small class="text-muted">sur <a href="{% url 'ticket_detail' post.ticket.id %}">{{ post.ticket.headline }}</a> de <a href="{% url 'profil_page' post.ticket.user.id %}">{{ post.ticket.user.username }}</a></small>
+            
+            
+            {% elif post.content_type == "review" %}
             <h5 class="card-title">Note : {{ post.rating }}</h5>
             {% endif %}
             <br><br>
@@ -32,7 +40,6 @@
             {% if post.content_type != "review" %}
                 {% if post.review_posted %}
                     <a href="{% url 'ticket_detail' post.id %}" class="btn btn-primary">Voir la review</a>
-                    <small class="text-muted">de <a href="{% url 'profil_page' post.user.id %}">{{ post.user.username }}</a></small>
                 {% endif %}
                 {% if post.review_posted is False %}
                 <a href="{% url 'review_upload' post.id %}" class="btn btn-primary">Publier une review</a>

@@ -66,7 +66,12 @@
                 {% for ticket in tickets %}
                     <br><br>
                     <h6><a href="{% url 'ticket_detail' ticket.id %}" class="text-decoration-none text-danger">{{ ticket.headline }} - <small class="text-muted">le {{ ticket.time_created }}</small> </a></h6>
-                    <br>
+                    {% if ticket.review_posted %}
+                    <small class="text-muted">Review postée !</small>
+                    {% else %}
+                    <small class="text-muted">En attente de review ...</small>
+                    {% endif %}
+                    <br><br>
                     <img src="{{ ticket.picture.url }}" alt="image">
                     <br><br>
                     <p>{{ ticket.body }}</p>

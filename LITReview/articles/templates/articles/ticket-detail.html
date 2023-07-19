@@ -2,24 +2,46 @@
 {% block title %}Post de {{ ticket.user.username }}{% endblock title %}
 
 {% block content %}
-<h1>{{ ticket.headline }}</h1>
-<img src="{{ ticket.picture.url }}" alt="{{ ticket.headline }}">
-<br><br>
-<p>{{ ticket.body }}</p>
-<br><br>
-<p><a href="{% url 'profil_page' user.id %}"></a>{{ ticket.user.username }} - {{ ticket.time_created }}</p>
-{% if ticket.user == user %}
-<a href="{% url 'ticket_delete_view' ticket.id %}">Supprimer le post.</a>
-{% endif %}
-{% if reviews.count < 1 %}
-<a href="{% url 'review_upload' ticket.id %}">Publier une review.</a>
-{% endif %}
-<hr>
-{% for review in reviews %}
-<h1>{{ review.rating }}</h1>
-<h2>{{review.headline}}</h2>
-<p>{{ review.body }}</p>
-<p>Publié par <a href="{% url 'profil_page' review.user.id %}">{{ review.user.username }}</a> le {{ review.time_created }}</p>
-{% endfor %}
+
+<div class="card" style="width: 35rem;">
+    <div class="post_head">
+        <div class="post_content_type">
+
+            <h5 class="card-title">Ticket</h5>
+            <small class="text-muted">Le {{ ticket.time_created }} par <a href="{% url 'profil_page' ticket.user.id %}">{{ ticket.user.username }}</a></small>
+            <br>
+            {% if ticket.user == user %}
+            <a href="{% url 'ticket_delete_view' ticket.id %}">Supprimer le post.</a>
+            {% endif %}
+            <br><br>
+        </div>
+    </div>
+
+        {% if ticket.picture.url != None %}
+        <img class="card-img-top" src="{{ ticket.picture.url }}" alt="Image">
+        {% endif %}
+
+    <div class="card-body">
+    <h5 class="card-title">{{ ticket.headline }}</h5>
+    <br><br>
+    <p class="card-text">{{ ticket.body }}</p>
+    <br>
+    {% if ticket.review_posted %}
+    <hr>
+    <h5 class="card-title">Review</h5>
+    <br>
+        {% for review in reviews %}
+        <h1>{{ review.rating }}</h1>
+        <h2>{{review.headline}}</h2>
+        <p>{{ review.body }}</p>
+        <p>Publié par <a href="{% url 'profil_page' review.user.id %}">{{ review.user.username }}</a> le {{ review.time_created }}</p>
+        {% endfor %}
+    {% endif %}
+    {% if ticket.review_posted is False %}
+    <a href="{% url 'review_upload' ticket.id %}" class="btn btn-primary">Publier une review</a>
+    {% endif %}
+
+    </div>
+</div>
 
 {% endblock content %}

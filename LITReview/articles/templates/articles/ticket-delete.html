@@ -2,7 +2,23 @@
 
 {% block title %}Suppression{% endblock title %}
 {% block content %}
-<h1>Supprimer le post ?</h1>
-<a href="{% url 'ticket_delete' ticket.id %}">Oui</a>
-<a href="{% url 'ticket_detail' ticket.id %}">Non</a>
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSheet">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <form>
+            <div class="modal-header border-bottom-0">
+                <h1 class="modal-title fs-5">Supprimer le post ?</h1>
+                <button type="submit" formaction="{% url 'ticket_detail' ticket.id %}" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body py-0">
+                <p>Si vous supprimez ce post, vous supprimez également la review attachée à celui-ci. Les autres utilisateurs ne les verront plus.</p>
+              </div>
+              <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
+                <button type="submit" formaction="{% url 'ticket_delete' ticket.id %}" class="btn btn-lg btn-primary">Supprimer</button>
+                <button type="submit" formaction="{% url 'ticket_detail' ticket.id %}" class="btn btn-lg btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
