@@ -1,0 +1,26 @@
+{% extends 'articles/base.html' %}
+{% block Title %}Edit{% endblock Title %}
+
+{% block content %}
+<h2>Modifier la review</h2>
+
+<br>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="exampleFormControlInput1" class="form-label">Note</label>
+    <br>
+    {{form.rating}}
+    <br><br>
+    <label for="exampleFormControlInput1" class="form-label">Titre</label>
+    <br>
+    {{ form.headline }}
+    <br><br>
+    <label for="exampleFormControlInput1" class="form-label">Commentaire</label>
+    <br>
+    {{ form.body }}
+    <br><br><br>
+    {{ form.picture }}
+    <br><br><br>
+    <input type="submit" value="Modifier">
+</form>
+{% endblock content %}

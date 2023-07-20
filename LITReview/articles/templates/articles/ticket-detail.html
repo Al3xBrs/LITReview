@@ -8,11 +8,16 @@
         <div class="post_content_type">
 
             <h5 class="card-title">Ticket</h5>
+
             <small class="text-muted">Le {{ ticket.time_created }} par <a href="{% url 'profil_page' ticket.user.id %}">{{ ticket.user.username }}</a></small>
             <br>
-            {% if ticket.user == user %}
-            <a href="{% url 'ticket_delete_view' ticket.id %}">Supprimer le post.</a>
+            {% if ticket.user == request.user %}
+            <small>(<a href="{% url 'edit_ticket' ticket.id %}">Modifier le post</a>)</small>
+            <small>(<a href="{% url 'ticket_delete_view' ticket.id %}">Supprimer le post</a>)</small>
+
             {% endif %}
+            <br>
+
             <br><br>
         </div>
     </div>

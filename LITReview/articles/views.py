@@ -18,7 +18,6 @@ def home(request):
     return render(request, "articles/home.html", {"posts": posts})
 
 
-# TODO: Vue file d'abonnement
 @login_required
 def followed(request):
     user = request.user
@@ -64,6 +63,7 @@ def ticket_detail(request, ticket_id):
 def ticket_delete(request, ticket_id):
     ticket = models.Ticket.objects.get(id=ticket_id)
     ticket.delete()
+
     return redirect("home")
 
 
@@ -71,6 +71,33 @@ def ticket_delete(request, ticket_id):
 def ticket_delete_view(request, ticket_id):
     ticket = models.Ticket.objects.get(id=ticket_id)
     return render(request, "articles/ticket-delete.html", {"ticket": ticket})
+
+
+@login_required
+def edit_ticket(request, ticket_id):
+    ticket = models.Ticket.objects.get(id=ticket_id)
+    if request.method == "POST":
+        form = TicketForm(request.POST, request.FILES, instance=ticket)
+        if form.is_valid():
+            form.save()
+            return redirect("ticket_detail", ticket_id)
+    else:
+        form = TicketForm(instance=ticket)
+    return render(request, "articles/edit_ticket.html", {"form": form})
+
+
+@login_required
+def edit_review(request, review_id):
+    review = models.Review.objects.get(id=review_id)
+
+    if request.method == "POST":
+        form = ReviewForm(request.POST, request.FILES, instance=review)
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    else:
+        form = ReviewForm(instance=review)
+    return render(request, "articles/edit_review.html", {"form": form})
 
 
 @login_required
@@ -91,6 +118,23 @@ def review_upload(request, ticket_id):
     return render(
         request, "articles/review-upload.html", {"form": form, "ticket": ticket}
     )
+
+
+@login_required
+def review_delete(request, review_id):
+    review = models.Review.objects.get(id=review_id)
+    ticket = models.Ticket.objects.get(id=review.ticket.id)
+    ticket.review_posted = False
+    ticket.save()
+    review.delete()
+
+    return redirect("home")
+
+
+@login_required
+def review_delete_view(request, review_id):
+    review = models.Review.objects.get(id=review_id)
+    return render(request, "articles/review-delete.html", {"review": review})
 
 
 @login_required

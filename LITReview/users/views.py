@@ -24,6 +24,8 @@ def profil_page(request, user_id):
     tickets = art_mod.Ticket.objects.filter(user=user_check).order_by("-time_created")
     reviews = art_mod.Review.objects.filter(user=user_check).order_by("-time_created")
     followed = user_check.followers
+    subscribers = user_check.following.all()
+
     return render(
         request,
         "users/profil_user.html",
@@ -32,6 +34,7 @@ def profil_page(request, user_id):
             "tickets": tickets,
             "reviews": reviews,
             "followed": followed,
+            "subscribers": subscribers,
         },
     )
 
@@ -39,7 +42,10 @@ def profil_page(request, user_id):
 @login_required
 def follow_user(request, user_id):
     user_check = models.User.objects.get(id=user_id)
+    print("USER_CHECK", user_check)
+
     user = request.user
+    print("USER", user)
     user.followers.add(user_check)
     return redirect("profil_page", user_id)
 

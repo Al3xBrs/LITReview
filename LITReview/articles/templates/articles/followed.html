@@ -7,12 +7,22 @@
         <div class="card" style="width: 35rem;">
             <div class="post_head">
                 <div class="post_content_type">
-                    {% if post.content_type == "ticket" %}
-                    <h5 class="card-title">Ticket</h5>
-                    {% else %}
-                    <h5 class="card-title">Review</h5>
-                    {% endif %}
+                    {% if post.content_type == "ticket" and post.review_posted %}
+                    <h5 class="card-title text-primary">Ticket</h5>
                     <small class="text-muted">Le {{ post.time_created }} par <a href="{% url 'profil_page' post.user.id %}">{{ post.user.username }}</a></small>
+                    <br>
+                    <p class="badge bg-secondary">Review publiée</p>
+                    
+                    {% elif post.content_type == "ticket" and post.review_posted is False %}
+                    <h5 class="card-title text-primary">Ticket</h5>
+                    <small class="text-muted">Le {{ post.time_created }} par <a href="{% url 'profil_page' post.user.id %}">{{ post.user.username }}</a></small>
+                    <br>
+                    <span class="badge bg-secondary">En attente de review.</span>
+                    {% else %}
+                    <h5 class="card-title text-info">Review</h5>
+                    <small class="text-muted">Le {{ post.time_created }} par <a href="{% url 'profil_page' post.user.id %}">{{ post.user.username }}</a></small>
+                    {% endif %}
+                    
                     <br><br>
                 </div>
             </div>
@@ -39,7 +49,7 @@
             <br>
             {% if post.content_type != "review" %}
                 {% if post.review_posted %}
-                    <a href="{% url 'ticket_detail' post.id %}" class="btn btn-primary">Voir la review</a>
+                    <a href="{% url 'ticket_detail' post.id %}" class="btn btn-info">Voir la review</a>
                 {% endif %}
                 {% if post.review_posted is False %}
                 <a href="{% url 'review_upload' post.id %}" class="btn btn-primary">Publier une review</a>

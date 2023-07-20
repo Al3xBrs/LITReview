@@ -59,6 +59,16 @@ urlpatterns = [
         name="review_upload",
     ),
     path("review/upload/", articles.views.review_up, name="review_up"),
+    path(
+        "review-delete/<int:review_id>/",
+        articles.views.review_delete,
+        name="review_delete",
+    ),
+    path(
+        "review-delete-view/<int:review_id>/",
+        articles.views.review_delete_view,
+        name="review_delete_view",
+    ),
     path("ticket/upload/", articles.views.ticket_upload, name="ticket_upload"),
     path("ticket/<int:ticket_id>/", articles.views.ticket_detail, name="ticket_detail"),
     path(
@@ -75,6 +85,12 @@ urlpatterns = [
     path("user/follow/<int:user_id>/", follow_user, name="follow_user"),
     path("user/unfollow/<int:user_id>/", unfollow_user, name="unfollow_user"),
     path("followed/", articles.views.followed, name="followed"),
+    path(
+        "ticket/<int:ticket_id>/edit/", articles.views.edit_ticket, name="edit_ticket"
+    ),
+    path(
+        "review/<int:review_id>/edit/", articles.views.edit_review, name="edit_review"
+    ),
 ]
 
 if settings.DEBUG:

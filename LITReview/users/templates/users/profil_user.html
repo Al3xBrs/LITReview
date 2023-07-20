@@ -51,12 +51,30 @@
                             <p class="small text-muted mb-0">Reviews</p>
                         </a>
                     </div>
+                    
+                </div>
+                <div>
                     <div>
-                        <p class="mb-1 h5">{{ followed.count }}</p>
-                        <p class="small text-muted mb-0">Profils suivis</p>
+                        <hr>
+                        <p>Abonnements <small>({{ followed.count }})</small> | 
+                        {% for follower in followed.all %}
+                            <span>-</span>
+                            <a href="{% url 'profil_page' follower.id %}"class="text-decoration-none text-primary">{{ follower.username }}</a>
+                            <span>-</span>
+                        {% endfor %}</p>
+                    </div>
+                    <div>
+                        <hr>
+                        <p>Abonnés <small>({{ subscribers.count }})</small> | 
+                            {% for subscriber in subscribers %}
+                                <span>-</span>
+                                <a href="{% url 'profil_page' subscriber.id %}"class="text-decoration-none text-info">{{ subscriber.username }}</a>
+                                <span>-</span>
+                            {% endfor %}
+                        </p>
+                        
                     </div>
                 </div>
-                
             </div>
             <div class="card-body p-4 text-black">
               
@@ -66,10 +84,16 @@
                 {% for ticket in tickets %}
                     <br><br>
                     <h6><a href="{% url 'ticket_detail' ticket.id %}" class="text-decoration-none text-danger">{{ ticket.headline }} - <small class="text-muted">le {{ ticket.time_created }}</small> </a></h6>
+                    {% if user_check == request.user %}
+                        
+                        <small class="text-muted">(<a href="{% url 'edit_ticket' ticket.id %}">Modifier le post</a>)</small>
+                        <small class="text-muted">(<a href="{% url 'ticket_delete_view' ticket.id %}">Supprimer le post</a>)</small>
+                        <br><br>
+                    {% endif %}
                     {% if ticket.review_posted %}
-                    <small class="text-muted">Review postée !</small>
+                        <small class="text-muted">Review postée !</small>
                     {% else %}
-                    <small class="text-muted">En attente de review ...</small>
+                        <small class="text-muted">En attente de review ...</small>
                     {% endif %}
                     <br><br>
                     <img src="{{ ticket.picture.url }}" alt="image">
@@ -98,6 +122,12 @@
                     {% endif %}
                     <br>
                     <h6>"{{ review.headline }}"</h6>
+                    {% if user_check == request.user %}
+                        
+                        <small class="text-muted">(<a href="{% url 'edit_review' review.id %}">Modifier le post</a>)</small>
+                        <small class="text-muted">(<a href="{% url 'review_delete_view' review.id %}">Supprimer le post</a>)</small>
+                        <br><br>
+                    {% endif %}
                     <br>
                     <p>{{ review.body }}</p>
                     <p>le {{ review.time_created }}</p>
