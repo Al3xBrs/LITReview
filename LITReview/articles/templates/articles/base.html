@@ -26,12 +26,13 @@
               <li><a href="{% url 'followed' %}" class="nav-link px-2 link-light">Abonnements</a></li>
             </ul>
     
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-              <input type="search" class="form-control" placeholder="Rechercher ..." aria-label="Search">
-            </form>
+            
+
+            
     
             <div class="dropdown text-end">
               <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                
                 <img src="{{ user.profile_picture.url }}" alt="Profil" class="rounded-circle" width="32" height="32">
               </a>
               <ul class="dropdown-menu text-small">
@@ -40,6 +41,7 @@
                 <li><a class="dropdown-item" href="{% url 'logout' %}">Se déconnecter</a></li>
               </ul>
             </div>
+            
           </div>
         </div>
       </header>
