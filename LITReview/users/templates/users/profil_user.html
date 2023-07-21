@@ -17,6 +17,10 @@
                 </div>
               <div class="ms-3" style="margin-top: 130px;">
                 <h5>{{ user_check.username }}</h5>
+                {% if user_check == user %}
+                <a href="{% url 'password_change' %}">Changer mon mot de passe.</a>
+                {% endif %}
+                
 
               </div>
             </div>
